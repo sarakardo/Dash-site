@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://small-bonus-efaf.hesesh0610.workers.dev/sitemap.xml
