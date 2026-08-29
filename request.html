@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>درخواست راننده | دش</title>
+<meta name="description" content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="/style.css">
+<style>
+.form-shell{max-width:760px;margin:0 auto;padding:26px 0 70px}
+.form-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.back{color:var(--muted);text-decoration:none;font-size:14px}
+.mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#edf3f7;border-radius:16px;padding:5px;margin:0 0 22px}
+.mode-switch button{border:0;background:transparent;border-radius:12px;padding:13px 10px;font:inherit;font-weight:800;color:var(--muted);cursor:pointer}
+.mode-switch button.active{background:#fff;color:var(--ink);box-shadow:0 4px 14px rgba(15,23,42,.08)}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 12px 35px rgba(15,23,42,.06)}
+.progress-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-size:13px;color:var(--muted)}
+.progress{height:6px;background:#e8eef3;border-radius:99px;overflow:hidden}
+.progress>span{display:block;height:100%;width:25%;background:var(--accent);border-radius:99px;transition:width .25s ease}
+.step{display:none}.step.active{display:block}
+.step h1{font-size:30px;line-height:1.4;margin:22px 0 8px}
+.step .sub{color:var(--muted);margin:0 0 24px;font-size:15px}
+.field{margin:0 0 18px}.field label{display:block;font-weight:800;margin-bottom:7px;font-size:15px}
+.field small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.field input,.field select{width:100%;height:54px;border:1px solid #cfd9e2;border-radius:14px;padding:0 15px;font:inherit;font-size:16px;background:#fff;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(57,169,232,.12)}
+.field.invalid input,.field.invalid select{border-color:#dc2626}
+.error{color:#b91c1c;font-size:12px;margin-top:6px;display:none}.field.invalid .error{display:block}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.choice{position:relative}.choice input{position:absolute;opacity:0}.choice label{display:block;border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;background:#fff;min-height:76px}.choice input:checked+label{border-color:var(--accent);box-shadow:0 0 0 3px rgba(57,169,232,.12);background:#f6fcff}.choice strong{display:block}.choice span{font-size:12px;color:var(--muted)}
+.checkbox{display:flex;gap:10px;align-items:flex-start;padding:13px 14px;background:#f7fafc;border:1px solid var(--line);border-radius:14px;margin:10px 0 18px}.checkbox input{margin-top:6px;accent-color:var(--accent)}
+.actions-row{display:flex;justify-content:space-between;gap:10px;margin-top:26px}
+.form-btn{min-height:52px;border:0;border-radius:14px;padding:0 20px;font:inherit;font-weight:900;cursor:pointer}
+.form-btn.primary{background:var(--ink);color:#fff;flex:1}.form-btn.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.form-btn:disabled{opacity:.45;cursor:not-allowed}
+.notice-mini{font-size:12px;color:#475569;background:#f5faff;border:1px solid #d7edf8;border-radius:14px;padding:13px 14px;margin:16px 0}
+.upload{border:1.5px dashed #b9c9d5;border-radius:16px;padding:16px;background:#fbfdfe}.upload input{height:auto;border:0;padding:0;background:transparent}.preview{display:none;margin-top:10px;align-items:center;gap:10px}.preview img{width:72px;height:54px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.review{display:grid;gap:10px}.review-item{display:flex;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid #edf1f4}.review-item span{color:var(--muted);font-size:13px}.review-item strong{font-size:14px;text-align:left}
+.success{display:none;text-align:center;padding:35px 10px}.success .ok{width:64px;height:64px;border-radius:50%;background:#e9f8ef;color:#15803d;display:grid;place-items:center;font-size:28px;font-weight:900;margin:0 auto 18px}.success h1{font-size:28px}.success p{color:var(--muted)}
+.helper-link{border:0;background:none;color:var(--accent2);font:inherit;padding:0;cursor:pointer;font-weight:700}
+details.help{margin-top:8px;background:#f8fafc;border-radius:12px;padding:10px 12px;color:#475569;font-size:12px}
+@media(max-width:600px){.form-shell{padding-top:14px}.form-card{padding:20px;border-radius:20px}.step h1{font-size:25px}.choice-grid{grid-template-columns:1fr}.actions-row{position:sticky;bottom:0;background:rgba(245,248,251,.94);padding:12px 0 calc(12px + env(safe-area-inset-bottom));z-index:3}.form-btn{min-height:54px}}
+</style>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="/">د<span>ش</span></a>
+  <a class="back" href="/">بازگشت به دش</a>
+</header>
+
+<main class="wrap form-shell">
+  <div class="mode-switch" role="tablist" aria-label="نوع درخواست">
+    <button id="passengerTab" class="active" type="button" role="tab" aria-selected="true">درخواست راننده</button>
+    <button id="driverTab" type="button" role="tab" aria-selected="false">ثبت‌نام راننده</button>
+  </div>
+
+  <section class="form-card" id="passengerForm" aria-label="درخواست راننده">
+    <div class="progress-row"><span id="pStepText">مرحله ۱ از ۴</span><span>درخواست راننده</span></div>
+    <div class="progress"><span id="pProgress"></span></div>
+
+    <form id="pForm" novalidate>
+      <div class="step active" data-step="1">
+        <h1>سفرتان را مشخص کنیم</h1>
+        <p class="sub">اول فقط چند اطلاعات درباره مسیر می‌گیریم. اطلاعات حساس را در مراحل بعدی می‌پرسیم.</p>
+        <div class="field">
+          <label>برای چه کسی راننده می‌خواهید؟</label>
+          <div class="choice-grid">
+            <div class="choice"><input id="forSelf" name="forWhom" value="self" type="radio"><label for="forSelf"><strong>برای خودم</strong><span>خودم مسافر و صاحب خودرو هستم.</span></label></div>
+            <div class="choice"><input id="forOther" name="forWhom" value="other" type="radio"><label for="forOther"><strong>برای شخص دیگری</strong><span>مثلاً برای یکی از اعضای خانواده.</span></label></div>
+          </div>
+          <div class="error">یکی از گزینه‌ها را انتخاب کنید.</div>
+        </div>
+        <div class="field"><label for="pDestination">می‌خواهید به کجا بروید؟</label><input id="pDestination" name="destination" autocomplete="street-address" placeholder="مثلاً: تهران، خیابان ولیعصر"><small>مقصد سفر را بنویسید.</small><div class="error">مقصد را وارد کنید.</div></div>
+        <div class="field"><label for="pPickup">محل سوار شدن مسافر</label><input id="pPickup" name="pickup" autocomplete="street-address" placeholder="مثلاً: تهران، میدان ونک"><div class="error">محل سوار شدن را وارد کنید.</div></div>
+        <div class="checkbox"><input id="sameCarPlace" type="checkbox"><label for="sameCarPlace">محل حضور خودرو همان محل سوار شدن مسافر است.</label></div>
+        <div class="field" id="carPlaceWrap"><label for="pCarPlace">خودرو در کجا قرار دارد؟</label><input id="pCarPlace" name="carPlace" autocomplete="street-address" placeholder="مثلاً: تهران، خیابان ملاصدرا"><div class="error">محل خودرو را وارد کنید.</div></div>
+        <div class="actions-row"><button class="form-btn primary" type="button" data-next>ادامه درخواست</button></div>
+      </div>
+
+      <div class="step" data-step="2">
+        <h1>اطلاعات تماس</h1>
+        <p class="sub">برای هماهنگی درخواست، اطلاعات مسافر و در صورت نیاز صاحب خودرو را می‌گیریم.</p>
+        <div class="field"><label for="pName">نام و نام خانوادگی مسافر</label><input id="pName" name="passengerName" autocomplete="name" placeholder="مثلاً: سارا احمدی"><div class="error">نام و نام خانوادگی را وارد کنید.</div></div>
+        <div class="field"><label for="pMobile">شماره موبایل مسافر</label><input id="pMobile" name="passengerMobile" inputmode="tel" autocomplete="tel" placeholder="مثلاً: 09121234567"><div class="error">شماره موبایل را وارد کنید.</div></div>
+        <div class="field"><label for="pNational">کد ملی مسافر</label><input id="pNational" name="passengerNationalId" inputmode="numeric" maxlength="10" placeholder="۱۰ رقم"><small>برای ثبت صحیح، کد ملی را بدون فاصله وارد کنید.</small><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
+        <div id="ownerFields">
+          <div class="notice-mini">چون خودرو ممکن است متعلق به شخص دیگری باشد، اطلاعات صاحب خودرو را جداگانه می‌گیریم.</div>
+          <div class="field"><label for="oName">نام و نام خانوادگی صاحب خودرو</label><input id="oName" name="ownerName" autocomplete="name" placeholder="مثلاً: علی رضایی"><div class="error">نام صاحب خودرو را وارد کنید.</div></div>
+          <div class="field"><label for="oMobile">شماره موبایل صاحب خودرو</label><input id="oMobile" name="ownerMobile" inputmode="tel" autocomplete="tel" placeholder="مثلاً: 09121234567"><div class="error">شماره موبایل صاحب خودرو را وارد کنید.</div></div>
+          <div class="field"><label for="oNational">کد ملی صاحب خودرو</label><input id="oNational" name="ownerNationalId" inputmode="numeric" maxlength="10" placeholder="۱۰ رقم"><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
+        </div>
+        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>ادامه</button></div>
+      </div>
+
+      <div class="step" data-step="3">
+        <h1>حالا خودرو را می‌شناسیم</h1>
+        <p class="sub">این اطلاعات برای ثبت و تطبیق خودروی مورد درخواست لازم است.</p>
+        <div class="field"><label for="plate">شماره پلاک خودرو</label><input id="plate" name="plate" placeholder="مثلاً: ۱۲ الف ۳۴۵ ایران ۶۷"><div class="error">شماره پلاک را وارد کنید.</div></div>
+        <div class="field"><label for="carModel">نام و مدل خودرو</label><input id="carModel" name="carModel" placeholder="مثلاً: پژو ۲۰۷ اتوماتیک"><div class="error">نام و مدل خودرو را وارد کنید.</div></div>
+        <div class="field"><label for="vin">کد VIN خودرو</label><input id="vin" name="vin" inputmode="text" maxlength="17" placeholder="کد ۱۷ رقمی VIN"><details class="help"><summary>VIN را از کجا پیدا کنم؟</summary><p>VIN یک شناسه ۱۷ رقمی خودرو است. آن را از مدارک خودرو یا محل درج‌شده روی خودرو پیدا کنید.</p></details><div class="error">VIN را وارد کنید.</div></div>
+        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>بررسی اطلاعات</button></div>
+      </div>
+
+      <div class="step" data-step="4">
+        <h1>تقریباً تمام شد</h1>
+        <p class="sub">اطلاعات را یک‌بار بررسی کنید. اگر درست است، درخواست را ثبت کنید.</p>
+        <div class="review" id="pReview"></div>
+        <div class="notice-mini">اطلاعات هویتی و خودرو برای فرایند واقعی خدمت باید مطابق سیاست حریم خصوصی و شرایط رسمی Dash دریافت و نگهداری شود.</div>
+        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>اصلاح اطلاعات</button><button class="form-btn primary" type="submit">ثبت درخواست راننده</button></div>
+      </div>
+    </form>
+    <div class="success" id="pSuccess"><div class="ok">✓</div><h1>اطلاعات شما ثبت موقت شد</h1><p>رابط فرم آماده اتصال به سامانه واقعی Dash است. در نسخه فعلی، داده‌ها فقط برای تست در همین مرورگر ذخیره می‌شوند و هنوز به سرور ارسال نمی‌شوند.</p><a class="btn primary" href="/">بازگشت به صفحه اصلی</a></div>
+  </section>
+
+  <section class="form-card" id="driverForm" hidden aria-label="ثبت‌نام راننده">
+    <div class="progress-row"><span id="dStepText">مرحله ۱ از ۴</span><span>ثبت‌نام راننده</span></div>
+    <div class="progress"><span id="dProgress"></span></div>
+    <form id="dForm" novalidate>
+      <div class="step active" data-step="1">
+        <h1>راننده Dash شوید</h1>
+        <p class="sub">اول اطلاعات پایه را می‌گیریم. مدارک لازم را در مراحل بعدی دریافت می‌کنیم.</p>
+        <div class="field"><label for="dName">نام و نام خانوادگی</label><input id="dName" name="driverName" autocomplete="name" placeholder="مثلاً: علی رضایی"><div class="error">نام و نام خانوادگی را وارد کنید.</div></div>
+        <div class="field"><label for="dMobile">شماره موبایل</label><input id="dMobile" name="driverMobile" inputmode="tel" autocomplete="tel" placeholder="مثلاً: 09121234567"><div class="error">شماره موبایل را وارد کنید.</div></div>
+        <div class="field"><label for="dNational">کد ملی</label><input id="dNational" name="driverNationalId" inputmode="numeric" maxlength="10" placeholder="۱۰ رقم"><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
+        <div class="actions-row"><button class="form-btn primary" type="button" data-next>ادامه ثبت‌نام</button></div>
+      </div>
+
+      <div class="step" data-step="2">
+        <h1>هویت شما را تأیید می‌کنیم</h1>
+        <p class="sub">برای حفظ امنیت کاربران، تصاویر هر دو طرف کارت ملی را برای بررسی مدارک دریافت می‌کنیم.</p>
+        <div class="field"><label for="idFront">روی کارت ملی</label><div class="upload"><input id="idFront" name="idFront" type="file" accept="image/*" data-preview="idFrontPreview"><div class="preview" id="idFrontPreview"></div></div><div class="error">تصویر روی کارت ملی را اضافه کنید.</div></div>
+        <div class="field"><label for="idBack">پشت کارت ملی</label><div class="upload"><input id="idBack" name="idBack" type="file" accept="image/*" data-preview="idBackPreview"><div class="preview" id="idBackPreview"></div></div><div class="error">تصویر پشت کارت ملی را اضافه کنید.</div></div>
+        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>ادامه</button></div>
+      </div>
+
+      <div class="step" data-step="3">
+        <h1>گواهینامه رانندگی</h1>
+        <p class="sub">برای بررسی صلاحیت رانندگی، تصویر هر دو طرف گواهینامه را اضافه کنید.</p>
+        <div class="field"><label for="licFront">روی گواهینامه</label><div class="upload"><input id="licFront" name="licFront" type="file" accept="image/*" data-preview="licFrontPreview"><div class="preview" id="licFrontPreview"></div></div><div class="error">تصویر روی گواهینامه را اضافه کنید.</div></div>
+        <div class="field"><label for="licBack">پشت گواهینامه</label><div class="upload"><input id="licBack" name="licBack" type="file" accept="image/*" data-preview="licBackPreview"><div class="preview" id="licBackPreview"></div></div><div class="error">تصویر پشت گواهینامه را اضافه کنید.</div></div>
+        <div class="notice-mini">تصاویر مدارک اطلاعات حساسی دارند؛ قبل از فعال‌سازی ارسال واقعی، مسیر امن دریافت، ذخیره و دسترسی به مدارک باید در بک‌اند Dash پیاده‌سازی شود.</div>
+        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>بررسی اطلاعات</button></div>
+      </div>
+
+      <div class="step" data-step="4">
+        <h1>تقریباً تمام شد</h1>
+        <p class="sub">اطلاعات و مدارک را بررسی کنید. اگر درست است، ثبت‌نام را ارسال کنید.</p>
+        <div class="review" id="dReview"></div>
+        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>اصلاح اطلاعات</button><button class="form-btn primary" type="submit">ثبت درخواست همکاری</button></div>
+      </div>
+    </form>
+    <div class="success" id="dSuccess"><div class="ok">✓</div><h1>اطلاعات ثبت موقت شد</h1><p>رابط ثبت‌نام راننده آماده اتصال امن به سامانه واقعی Dash است. در نسخه فعلی، فایل مدارک به سرور ارسال نمی‌شود.</p><a class="btn primary" href="/">بازگشت به صفحه اصلی</a></div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  const passenger = $('#passengerForm'), driver = $('#driverForm');
+  const pTab = $('#passengerTab'), dTab = $('#driverTab');
+
+  function showMode(mode){
+    const isP = mode === 'p';
+    passenger.hidden = !isP; driver.hidden = isP;
+    pTab.classList.toggle('active', isP); dTab.classList.toggle('active', !isP);
+    pTab.setAttribute('aria-selected', isP); dTab.setAttribute('aria-selected', !isP);
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  pTab.onclick=()=>showMode('p'); dTab.onclick=()=>showMode('d');
+  if(location.hash==='#driver') showMode('d');
+
+  function setup(formId, prefix, total){
+    const form = $(formId), steps = $$('.step', form), progress = $(`#${prefix}Progress`), text = $(`#${prefix}StepText`);
+    let current=1;
+    function setStep(n){
+      current=n;
+      steps.forEach(s=>s.classList.toggle('active', +s.dataset.step===n));
+      progress.style.width = `${n/total*100}%`;
+      text.textContent = `مرحله ${n} از ${total}`;
+      form.closest('.form-card').scrollIntoView({behavior:'smooth', block:'start'});
+      const heading = steps[n-1].querySelector('h1'); if(heading) heading.focus?.();
+    }
+    function clearErrors(){
+      $$('.field',form).forEach(f=>f.classList.remove('invalid'));
+    }
+    function validField(el){
+      if(!el) return true;
+      const field=el.closest('.field'); if(!field) return true;
+      const val=el.value.trim();
+      let ok=!!val;
+      if(el.type==='tel') ok=/^09\d{9}$/.test(val.replace(/\s+/g,''));
+      if(el.name?.toLowerCase().includes('national')) ok=/^\d{10}$/.test(val);
+      if(el.name==='vin') ok=/^[A-Za-z0-9]{17}$/.test(val);
+      field.classList.toggle('invalid',!ok);
+      return ok;
+    }
+    function validateStep(){
+      clearErrors();
+      const active=steps[current-1];
+      let ok=true;
+      active.querySelectorAll('input:not([type=file]):not([type=radio]):not([type=checkbox]),select').forEach(i=>{if(!validField(i))ok=false});
+      if(prefix==='p' && current===1){
+        const choice=form.querySelector('input[name=forWhom]:checked');
+        const field=form.querySelector('input[name=forWhom]').closest('.field');
+        if(!choice){field.classList.add('invalid');ok=false}
+        const same=$('#sameCarPlace');
+        const cp=$('#pCarPlace');
+        if(!same.checked && !validField(cp))ok=false;
+      }
+      if(prefix==='p' && current===2){
+        const other=form.querySelector('#forOther').checked;
+        if(other){['oName','oMobile','oNational'].forEach(id=>{if(!validField($('#'+id)))ok=false})}
+      }
+      if(prefix==='d' && current>=2){
+        active.querySelectorAll('input[type=file]').forEach(i=>{
+          const f=i.closest('.field');
+          f.classList.toggle('invalid', !i.files?.length);
+          if(!i.files?.length) ok=false;
+        });
+      }
+      return ok;
+    }
+    function review(){
+      const data = {};
+      new FormData(form).forEach((v,k)=>{if(typeof v==='string') data[k]=v});
+      const target = $(`#${prefix}Review`);
+      const labels = prefix==='p' ? {
+        passengerName:'مسافر', passengerMobile:'موبایل مسافر', passengerNationalId:'کد ملی مسافر',
+        ownerName:'صاحب خودرو', ownerMobile:'موبایل صاحب خودرو', ownerNationalId:'کد ملی صاحب خودرو',
+        pickup:'محل سوار شدن', carPlace:'محل خودرو', destination:'مقصد', plate:'پلاک', carModel:'خودرو', vin:'VIN'
+      } : {driverName:'نام راننده',driverMobile:'موبایل',driverNationalId:'کد ملی'};
+      target.innerHTML='';
+      Object.entries(labels).forEach(([k,l])=>{
+        if(data[k]) target.insertAdjacentHTML('beforeend',`<div class="review-item"><span>${l}</span><strong>${escapeHtml(data[k])}</strong></div>`);
+      });
+      if(prefix==='d'){
+        ['idFront','idBack','licFront','licBack'].forEach(k=>{
+          const input=$('#'+k); if(input?.files?.length) target.insertAdjacentHTML('beforeend',`<div class="review-item"><span>${k==='idFront'?'روی کارت ملی':k==='idBack'?'پشت کارت ملی':k==='licFront'?'روی گواهینامه':'پشت گواهینامه'}</span><strong>تصویر آماده است</strong></div>`);
+        });
+      }
+    }
+    function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+
+    form.addEventListener('click', e=>{
+      const next=e.target.closest('[data-next]'), prev=e.target.closest('[data-prev]');
+      if(next){if(validateStep()){if(current<total){if(current===total-1)review();setStep(current+1)}else review()}}
+      if(prev && current>1)setStep(current-1);
+    });
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      if(!validateStep()) return;
+      const payload={type:prefix==='p'?'passenger_request':'driver_application',createdAt:new Date().toISOString()};
+      new FormData(form).forEach((v,k)=>{ if(typeof v==='string') payload[k]=v; });
+      localStorage.setItem(`dash_last_${prefix}_form`, JSON.stringify(payload));
+      form.hidden=true; $(`#${prefix}Success`).style.display='block';
+    });
+    form.querySelectorAll('input[type=file]').forEach(input=>{
+      input.addEventListener('change',()=>{
+        const box=$('#'+input.dataset.preview); if(!box) return;
+        box.innerHTML='';
+        if(input.files?.[0]){
+          const img=document.createElement('img'); img.alt='پیش‌نمایش مدرک'; img.src=URL.createObjectURL(input.files[0]);
+          box.append(img, document.createTextNode('تصویر انتخاب شد')); box.style.display='flex';
+        }
+      });
+    });
+    return {setStep};
+  }
+
+  const p=setup('#pForm','p',4), d=setup('#dForm','d',4);
+
+  $('#sameCarPlace').addEventListener('change', e=>{
+    const wrap=$('#carPlaceWrap'); wrap.style.display=e.target.checked?'none':'block';
+    $('#pCarPlace').required=!e.target.checked;
+  });
+  document.querySelectorAll('input[name=forWhom]').forEach(i=>i.addEventListener('change',()=>{
+    const other=$('#forOther').checked;
+    $('#ownerFields').style.display=other?'block':'none';
+    if(!other){
+      ['oName','oMobile','oNational'].forEach(id=>$('#'+id).value='');
+    }
+  }));
+  $('#forSelf').click();
+})();
+</script>
+</body>
+</html>
