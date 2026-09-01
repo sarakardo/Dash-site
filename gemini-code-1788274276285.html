@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ثبت درخواست راننده جایگزین | Dash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="form-container">
+    <h2>درخواست راننده جایگزین Dash</h2>
+    <p>لطفاً اطلاعات زیر را جهت اعزام راننده مجرب وارد کنید.</p>
+    
+    <div class="progress-bar">
+      <div class="step active">۱. اطلاعات مسافر</div>
+      <div class="step">۲. اطلاعات خودرو</div>
+      <div class="step">۳. مسیر و تایید</div>
+    </div>
+
+    <form id="dash-request-form">
+      <!-- Step 1 -->
+      <div class="form-step active" id="step-1">
+        <h3>اطلاعات فردی</h3>
+        <label>نام و نام خانوادگی مسافر</label>
+        <input type="text" required placeholder="مثال: علی محمدی">
+        
+        <label>شماره موبایل مسافر</label>
+        <input type="tel" required placeholder="۰۹۱۲XXXXXXX">
+        
+        <label>کد ملی مسافر</label>
+        <input type="text" required placeholder="برای احراز هویت و بیمه">
+
+        <button type="button" class="btn-next" onclick="nextStep(2)">مرحله بعدی</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-step" id="step-2" style="display:none;">
+        <h3>اطلاعات خودرو و مالک</h3>
+        <label>نام و مدل خودرو</label>
+        <input type="text" required placeholder="مثال: پژو ۲۰۷ / دیگنیتی">
+
+        <label>شماره پلاک خودرو</label>
+        <input type="text" required placeholder="ایران -- | --- ج --">
+
+        <label>کد VIN خودرو (جهت تایید اصالت سند و پوشش بیمه)</label>
+        <input type="text" required placeholder="درج شده در کارت خودرو">
+
+        <button type="button" class="btn-prev" onclick="nextStep(1)">قبلی</button>
+        <button type="button" class="btn-next" onclick="nextStep(3)">مرحله بعدی</button>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-step" id="step-3" style="display:none;">
+        <h3>مبداء و مقصد</h3>
+        <label>آدرس مبداء (محل فعلی خودرو)</label>
+        <input type="text" required placeholder="منطقه، خیابان، پلاک">
+
+        <label>آدرس مقصد</label>
+        <input type="text" required placeholder="مقصد نهایی">
+
+        <button type="button" class="btn-prev" onclick="nextStep(2)">قبلی</button>
+        <button type="submit" class="btn-submit">ثبت نهایی درخواست</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    function nextStep(step) {
+      document.querySelectorAll('.form-step').forEach(el => el.style.display = 'none');
+      document.getElementById('step-' + step).style.display = 'block';
+    }
+  </script>
+</body>
+</html>
