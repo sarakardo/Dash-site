@@ -1,53 +1,5 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>درخواست راننده | دش</title>
-<meta name="description" content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش.">
-<meta name="robots" content="noindex,nofollow">
-<link rel="stylesheet" href="/style.css">
-<style>
-.form-shell{max-width:760px;margin:0 auto;padding:26px 0 70px}
-.form-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
-.back{color:var(--muted);text-decoration:none;font-size:14px}
-.mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#edf3f7;border-radius:16px;padding:5px;margin:0 0 22px}
-.mode-switch button{border:0;background:transparent;border-radius:12px;padding:13px 10px;font:inherit;font-weight:800;color:var(--muted);cursor:pointer}
-.mode-switch button.active{background:#fff;color:var(--ink);box-shadow:0 4px 14px rgba(15,23,42,.08)}
-.form-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 12px 35px rgba(15,23,42,.06)}
-.progress-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-size:13px;color:var(--muted)}
-.progress{height:6px;background:#e8eef3;border-radius:99px;overflow:hidden}
-.progress>span{display:block;height:100%;width:25%;background:var(--accent);border-radius:99px;transition:width .25s ease}
-.step{display:none}.step.active{display:block}
-.step h1{font-size:30px;line-height:1.4;margin:22px 0 8px}
-.step .sub{color:var(--muted);margin:0 0 24px;font-size:15px}
-.field{margin:0 0 18px}.field label{display:block;font-weight:800;margin-bottom:7px;font-size:15px}
-.field small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
-.field input,.field select{width:100%;height:54px;border:1px solid #cfd9e2;border-radius:14px;padding:0 15px;font:inherit;font-size:16px;background:#fff;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
-.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(57,169,232,.12)}
-.field.invalid input,.field.invalid select{border-color:#dc2626}
-.error{color:#b91c1c;font-size:12px;margin-top:6px;display:none}.field.invalid .error{display:block}
-.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-.choice{position:relative}.choice input{position:absolute;opacity:0}.choice label{display:block;border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;background:#fff;min-height:76px}.choice input:checked+label{border-color:var(--accent);box-shadow:0 0 0 3px rgba(57,169,232,.12);background:#f6fcff}.choice strong{display:block}.choice span{font-size:12px;color:var(--muted)}
-.checkbox{display:flex;gap:10px;align-items:flex-start;padding:13px 14px;background:#f7fafc;border:1px solid var(--line);border-radius:14px;margin:10px 0 18px}.checkbox input{margin-top:6px;accent-color:var(--accent)}
-.actions-row{display:flex;justify-content:space-between;gap:10px;margin-top:26px}
-.form-btn{min-height:52px;border:0;border-radius:14px;padding:0 20px;font:inherit;font-weight:900;cursor:pointer}
-.form-btn.primary{background:var(--ink);color:#fff;flex:1}.form-btn.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}
-.form-btn:disabled{opacity:.45;cursor:not-allowed}
-.notice-mini{font-size:12px;color:#475569;background:#f5faff;border:1px solid #d7edf8;border-radius:14px;padding:13px 14px;margin:16px 0}
-.upload{border:1.5px dashed #b9c9d5;border-radius:16px;padding:16px;background:#fbfdfe}.upload input{height:auto;border:0;padding:0;background:transparent}.preview{display:none;margin-top:10px;align-items:center;gap:10px}.preview img{width:72px;height:54px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
-.review{display:grid;gap:10px}.review-item{display:flex;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid #edf1f4}.review-item span{color:var(--muted);font-size:13px}.review-item strong{font-size:14px;text-align:left}
-.success{display:none;text-align:center;padding:35px 10px}.success .ok{width:64px;height:64px;border-radius:50%;background:#e9f8ef;color:#15803d;display:grid;place-items:center;font-size:28px;font-weight:900;margin:0 auto 18px}.success h1{font-size:28px}.success p{color:var(--muted)}
-.helper-link{border:0;background:none;color:var(--accent2);font:inherit;padding:0;cursor:pointer;font-weight:700}
-details.help{margin-top:8px;background:#f8fafc;border-radius:12px;padding:10px 12px;color:#475569;font-size:12px}
-@media(max-width:600px){.form-shell{padding-top:14px}.form-card{padding:20px;border-radius:20px}.step h1{font-size:25px}.choice-grid{grid-template-columns:1fr}.actions-row{position:sticky;bottom:0;background:rgba(245,248,251,.94);padding:12px 0 calc(12px + env(safe-area-inset-bottom));z-index:3}.form-btn{min-height:54px}}
-</style>
-</head>
-<body>
-<header class="wrap nav">
-  <a class="brand" href="/">د<span>ش</span></a>
-  <a class="back" href="/">بازگشت به دش</a>
-</header>
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>درخواست راننده | دش</title><meta name="description" content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش."><link rel="canonical" href="https://small-bonus-efaf.hesesh0610.workers.dev/request.html"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="stylesheet" href="/style.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:locale" content="fa_IR"><meta property="og:image" content="https://small-bonus-efaf.hesesh0610.workers.dev/assets/hero-dash.svg"><meta property="og:url" content="https://small-bonus-efaf.hesesh0610.workers.dev/request.html"><meta name="twitter:card" content="summary_large_image"><meta property="og:title" content="درخواست راننده | دش"><meta property="og:description" content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش."><meta property="og:url" content="https://small-bonus-efaf.hesesh0610.workers.dev/request.html"><meta property="og:image" content="https://small-bonus-efaf.hesesh0610.workers.dev/assets/hero-dash.svg"><meta name="twitter:card" content="summary_large_image"></head><body><header class="wrap nav"><a class="brand" href="/" aria-label="دش">د<span>ش</span></a><nav class="navlinks" aria-label="ناوبری اصلی"><a href="/#situations">چه زمانی؟</a><a href="/#how">چطور کار می‌کند؟</a><a href="/faq.html">سؤالات متداول</a><a href="/about.html">درباره دش</a><a href="/chekhabar/">چخبر؟</a></nav><a class="btn primary" href="/request.html">درخواست راننده</a></header><main><div class="wrap breadcrumbs">دش ← درخواست راننده</div><section><article class="article">
+
 
 <main class="wrap form-shell">
   <div class="mode-switch" role="tablist" aria-label="نوع درخواست">
@@ -286,5 +238,4 @@ details.help{margin-top:8px;background:#f8fafc;border-radius:12px;padding:10px 1
   $('#forSelf').click();
 })();
 </script>
-</body>
-</html>
+</article></section></main><footer class="footer"><div class="wrap footer-top"><div><strong>دش</strong><div style="margin-top:6px">راننده جایگزین برای خودروی شخصی</div></div><div class="footerlinks"><a href="/about.html">درباره دش</a><a href="/faq.html">سؤالات متداول</a><a href="/request.html">درخواست راننده</a><a href="/request.html#driver">ثبت‌نام راننده</a><a href="/chekhabar/">چخبر؟</a></div></div><div class="wrap" style="margin-top:20px">© دش — اطلاعات آموزشی و شرایط خدمت ممکن است تغییر کند؛ شرایط فعال سرویس را هنگام درخواست بررسی کنید.</div></footer></html>
