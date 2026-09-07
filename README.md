@@ -1,12 +1,12 @@
-# Dash website — SEO/GEO final
+# Dash — Unified Cloudflare Static Site
 
-این بسته نسخه نهایی بازطراحی‌شده سایت دش است.
+This repository is configured as a Cloudflare Workers Static Assets site.
 
-## نکات مهم
-- دامنه canonical و sitemap فعلاً روی Worker فعلی تنظیم شده‌اند: small-bonus-efaf.hesesh0610.workers.dev
-- پس از اتصال قطعی دامنه dashh.ir، canonicalها، sitemap، Open Graph و URLهای داخلی باید به دامنه نهایی منتقل شوند.
-- طراحی موبایل‌محور، ناوبری یکپارچه، مجله چخبر، تصاویر SVG اختصاصی، favicon و ساختار داده Article/WebSite در بسته قرار گرفته است.
-- هیچ متن مخفی، keyword stuffing یا تکنیک پنهان برای موتورهای جست‌وجو استفاده نشده است.
+- Deploy command: `npx wrangler deploy`
+- Static assets directory: `./public`
+- Main site: `/`
+- Editorial hub: `/chekhabar/`
+- CSS: `/style.css`
+- Images/SVG: `/assets/`
 
-## استقرار
-در GitHub repository فعلی Dash-site روی branch main جایگزین کنید تا Cloudflare Pages/Workers طبق تنظیمات موجود deploy کند.
+The `public/` directory is the only directory uploaded as static assets. This prevents deployment/configuration files from being mixed with site content.
