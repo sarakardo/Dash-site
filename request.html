@@ -1,111 +1,100 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>درخواست راننده | دش</title><meta name="description" content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش."><link rel="canonical" href="https://small-bonus-efaf.hesesh0610.workers.dev/request.html"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="stylesheet" href="/style.css"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:locale" content="fa_IR"><meta property="og:image" content="https://small-bonus-efaf.hesesh0610.workers.dev/assets/hero-dash.svg"><meta property="og:url" content="https://small-bonus-efaf.hesesh0610.workers.dev/request.html"><meta name="twitter:card" content="summary_large_image"><meta property="og:title" content="درخواست راننده | دش"><meta property="og:description" content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش."><meta property="og:url" content="https://small-bonus-efaf.hesesh0610.workers.dev/request.html"><meta property="og:image" content="https://small-bonus-efaf.hesesh0610.workers.dev/assets/hero-dash.svg"><meta name="twitter:card" content="summary_large_image"></head><body><header class="wrap nav"><a class="brand" href="/" aria-label="دش">د<span>ش</span></a><nav class="navlinks" aria-label="ناوبری اصلی"><a href="/#situations">چه زمانی؟</a><a href="/#how">چطور کار می‌کند؟</a><a href="/faq.html">سؤالات متداول</a><a href="/about.html">درباره دش</a><a href="/chekhabar/">چخبر؟</a></nav><a class="btn primary" href="/request.html">درخواست راننده</a></header><main><div class="wrap breadcrumbs">دش ← درخواست راننده</div><section><article class="article">
-
-
+<!DOCTYPE html>
+<html dir="rtl" lang="fa"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>درخواست راننده | دش</title><meta content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش." name="description"/><link href="https://small-bonus-efaf.hesesh0610.workers.dev/request.html" rel="canonical"/><meta content="index,follow,max-image-preview:large" name="robots"/><link href="/style.css" rel="stylesheet"/><link href="/favicon.svg" rel="icon" type="image/svg+xml"/><meta content="website" property="og:type"/><meta content="fa_IR" property="og:locale"/><meta content="https://small-bonus-efaf.hesesh0610.workers.dev/assets/hero-dash.svg" property="og:image"/><meta content="https://small-bonus-efaf.hesesh0610.workers.dev/request.html" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="درخواست راننده | دش" property="og:title"/><meta content="ثبت درخواست راننده جایگزین برای خودروی شخصی در دش." property="og:description"/><meta content="https://small-bonus-efaf.hesesh0610.workers.dev/request.html" property="og:url"/><meta content="https://small-bonus-efaf.hesesh0610.workers.dev/assets/hero-dash.svg" property="og:image"/><meta content="summary_large_image" name="twitter:card"/></head><body><header class="wrap nav"><a aria-label="دش" class="brand" href="/">د<span>ش</span></a><nav aria-label="ناوبری اصلی" class="navlinks"><a href="/#situations">چه زمانی؟</a><a href="/#how">چطور کار می‌کند؟</a><a href="/faq.html">سؤالات متداول</a><a href="/about.html">درباره دش</a><a href="/chekhabar/">چخبر؟</a></nav><a class="btn primary" href="/request.html">درخواست راننده</a></header><main><div class="wrap breadcrumbs">دش ← درخواست راننده</div><section><article class="article">
 <main class="wrap form-shell">
-  <div class="mode-switch" role="tablist" aria-label="نوع درخواست">
-    <button id="passengerTab" class="active" type="button" role="tab" aria-selected="true">درخواست راننده</button>
-    <button id="driverTab" type="button" role="tab" aria-selected="false">ثبت‌نام راننده</button>
-  </div>
-
-  <section class="form-card" id="passengerForm" aria-label="درخواست راننده">
-    <div class="progress-row"><span id="pStepText">مرحله ۱ از ۴</span><span>درخواست راننده</span></div>
-    <div class="progress"><span id="pProgress"></span></div>
-
-    <form id="pForm" novalidate>
-      <div class="step active" data-step="1">
-        <h1>سفرتان را مشخص کنیم</h1>
-        <p class="sub">اول فقط چند اطلاعات درباره مسیر می‌گیریم. اطلاعات حساس را در مراحل بعدی می‌پرسیم.</p>
-        <div class="field">
-          <label>برای چه کسی راننده می‌خواهید؟</label>
-          <div class="choice-grid">
-            <div class="choice"><input id="forSelf" name="forWhom" value="self" type="radio"><label for="forSelf"><strong>برای خودم</strong><span>خودم مسافر و صاحب خودرو هستم.</span></label></div>
-            <div class="choice"><input id="forOther" name="forWhom" value="other" type="radio"><label for="forOther"><strong>برای شخص دیگری</strong><span>مثلاً برای یکی از اعضای خانواده.</span></label></div>
-          </div>
-          <div class="error">یکی از گزینه‌ها را انتخاب کنید.</div>
-        </div>
-        <div class="field"><label for="pDestination">می‌خواهید به کجا بروید؟</label><input id="pDestination" name="destination" autocomplete="street-address" placeholder="مثلاً: تهران، خیابان ولیعصر"><small>مقصد سفر را بنویسید.</small><div class="error">مقصد را وارد کنید.</div></div>
-        <div class="field"><label for="pPickup">محل سوار شدن مسافر</label><input id="pPickup" name="pickup" autocomplete="street-address" placeholder="مثلاً: تهران، میدان ونک"><div class="error">محل سوار شدن را وارد کنید.</div></div>
-        <div class="checkbox"><input id="sameCarPlace" type="checkbox"><label for="sameCarPlace">محل حضور خودرو همان محل سوار شدن مسافر است.</label></div>
-        <div class="field" id="carPlaceWrap"><label for="pCarPlace">خودرو در کجا قرار دارد؟</label><input id="pCarPlace" name="carPlace" autocomplete="street-address" placeholder="مثلاً: تهران، خیابان ملاصدرا"><div class="error">محل خودرو را وارد کنید.</div></div>
-        <div class="actions-row"><button class="form-btn primary" type="button" data-next>ادامه درخواست</button></div>
-      </div>
-
-      <div class="step" data-step="2">
-        <h1>اطلاعات تماس</h1>
-        <p class="sub">برای هماهنگی درخواست، اطلاعات مسافر و در صورت نیاز صاحب خودرو را می‌گیریم.</p>
-        <div class="field"><label for="pName">نام و نام خانوادگی مسافر</label><input id="pName" name="passengerName" autocomplete="name" placeholder="مثلاً: سارا احمدی"><div class="error">نام و نام خانوادگی را وارد کنید.</div></div>
-        <div class="field"><label for="pMobile">شماره موبایل مسافر</label><input id="pMobile" name="passengerMobile" inputmode="tel" autocomplete="tel" placeholder="مثلاً: 09121234567"><div class="error">شماره موبایل را وارد کنید.</div></div>
-        <div class="field"><label for="pNational">کد ملی مسافر</label><input id="pNational" name="passengerNationalId" inputmode="numeric" maxlength="10" placeholder="۱۰ رقم"><small>برای ثبت صحیح، کد ملی را بدون فاصله وارد کنید.</small><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
-        <div id="ownerFields">
-          <div class="notice-mini">چون خودرو ممکن است متعلق به شخص دیگری باشد، اطلاعات صاحب خودرو را جداگانه می‌گیریم.</div>
-          <div class="field"><label for="oName">نام و نام خانوادگی صاحب خودرو</label><input id="oName" name="ownerName" autocomplete="name" placeholder="مثلاً: علی رضایی"><div class="error">نام صاحب خودرو را وارد کنید.</div></div>
-          <div class="field"><label for="oMobile">شماره موبایل صاحب خودرو</label><input id="oMobile" name="ownerMobile" inputmode="tel" autocomplete="tel" placeholder="مثلاً: 09121234567"><div class="error">شماره موبایل صاحب خودرو را وارد کنید.</div></div>
-          <div class="field"><label for="oNational">کد ملی صاحب خودرو</label><input id="oNational" name="ownerNationalId" inputmode="numeric" maxlength="10" placeholder="۱۰ رقم"><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
-        </div>
-        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>ادامه</button></div>
-      </div>
-
-      <div class="step" data-step="3">
-        <h1>حالا خودرو را می‌شناسیم</h1>
-        <p class="sub">این اطلاعات برای ثبت و تطبیق خودروی مورد درخواست لازم است.</p>
-        <div class="field"><label for="plate">شماره پلاک خودرو</label><input id="plate" name="plate" placeholder="مثلاً: ۱۲ الف ۳۴۵ ایران ۶۷"><div class="error">شماره پلاک را وارد کنید.</div></div>
-        <div class="field"><label for="carModel">نام و مدل خودرو</label><input id="carModel" name="carModel" placeholder="مثلاً: پژو ۲۰۷ اتوماتیک"><div class="error">نام و مدل خودرو را وارد کنید.</div></div>
-        <div class="field"><label for="vin">کد VIN خودرو</label><input id="vin" name="vin" inputmode="text" maxlength="17" placeholder="کد ۱۷ رقمی VIN"><details class="help"><summary>VIN را از کجا پیدا کنم؟</summary><p>VIN یک شناسه ۱۷ رقمی خودرو است. آن را از مدارک خودرو یا محل درج‌شده روی خودرو پیدا کنید.</p></details><div class="error">VIN را وارد کنید.</div></div>
-        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>بررسی اطلاعات</button></div>
-      </div>
-
-      <div class="step" data-step="4">
-        <h1>تقریباً تمام شد</h1>
-        <p class="sub">اطلاعات را یک‌بار بررسی کنید. اگر درست است، درخواست را ثبت کنید.</p>
-        <div class="review" id="pReview"></div>
-        <div class="notice-mini">اطلاعات هویتی و خودرو برای فرایند واقعی خدمت باید مطابق سیاست حریم خصوصی و شرایط رسمی Dash دریافت و نگهداری شود.</div>
-        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>اصلاح اطلاعات</button><button class="form-btn primary" type="submit">ثبت درخواست راننده</button></div>
-      </div>
-    </form>
-    <div class="success" id="pSuccess"><div class="ok">✓</div><h1>اطلاعات شما ثبت موقت شد</h1><p>رابط فرم آماده اتصال به سامانه واقعی Dash است. در نسخه فعلی، داده‌ها فقط برای تست در همین مرورگر ذخیره می‌شوند و هنوز به سرور ارسال نمی‌شوند.</p><a class="btn primary" href="/">بازگشت به صفحه اصلی</a></div>
-  </section>
-
-  <section class="form-card" id="driverForm" hidden aria-label="ثبت‌نام راننده">
-    <div class="progress-row"><span id="dStepText">مرحله ۱ از ۴</span><span>ثبت‌نام راننده</span></div>
-    <div class="progress"><span id="dProgress"></span></div>
-    <form id="dForm" novalidate>
-      <div class="step active" data-step="1">
-        <h1>راننده Dash شوید</h1>
-        <p class="sub">اول اطلاعات پایه را می‌گیریم. مدارک لازم را در مراحل بعدی دریافت می‌کنیم.</p>
-        <div class="field"><label for="dName">نام و نام خانوادگی</label><input id="dName" name="driverName" autocomplete="name" placeholder="مثلاً: علی رضایی"><div class="error">نام و نام خانوادگی را وارد کنید.</div></div>
-        <div class="field"><label for="dMobile">شماره موبایل</label><input id="dMobile" name="driverMobile" inputmode="tel" autocomplete="tel" placeholder="مثلاً: 09121234567"><div class="error">شماره موبایل را وارد کنید.</div></div>
-        <div class="field"><label for="dNational">کد ملی</label><input id="dNational" name="driverNationalId" inputmode="numeric" maxlength="10" placeholder="۱۰ رقم"><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
-        <div class="actions-row"><button class="form-btn primary" type="button" data-next>ادامه ثبت‌نام</button></div>
-      </div>
-
-      <div class="step" data-step="2">
-        <h1>هویت شما را تأیید می‌کنیم</h1>
-        <p class="sub">برای حفظ امنیت کاربران، تصاویر هر دو طرف کارت ملی را برای بررسی مدارک دریافت می‌کنیم.</p>
-        <div class="field"><label for="idFront">روی کارت ملی</label><div class="upload"><input id="idFront" name="idFront" type="file" accept="image/*" data-preview="idFrontPreview"><div class="preview" id="idFrontPreview"></div></div><div class="error">تصویر روی کارت ملی را اضافه کنید.</div></div>
-        <div class="field"><label for="idBack">پشت کارت ملی</label><div class="upload"><input id="idBack" name="idBack" type="file" accept="image/*" data-preview="idBackPreview"><div class="preview" id="idBackPreview"></div></div><div class="error">تصویر پشت کارت ملی را اضافه کنید.</div></div>
-        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>ادامه</button></div>
-      </div>
-
-      <div class="step" data-step="3">
-        <h1>گواهینامه رانندگی</h1>
-        <p class="sub">برای بررسی صلاحیت رانندگی، تصویر هر دو طرف گواهینامه را اضافه کنید.</p>
-        <div class="field"><label for="licFront">روی گواهینامه</label><div class="upload"><input id="licFront" name="licFront" type="file" accept="image/*" data-preview="licFrontPreview"><div class="preview" id="licFrontPreview"></div></div><div class="error">تصویر روی گواهینامه را اضافه کنید.</div></div>
-        <div class="field"><label for="licBack">پشت گواهینامه</label><div class="upload"><input id="licBack" name="licBack" type="file" accept="image/*" data-preview="licBackPreview"><div class="preview" id="licBackPreview"></div></div><div class="error">تصویر پشت گواهینامه را اضافه کنید.</div></div>
-        <div class="notice-mini">تصاویر مدارک اطلاعات حساسی دارند؛ قبل از فعال‌سازی ارسال واقعی، مسیر امن دریافت، ذخیره و دسترسی به مدارک باید در بک‌اند Dash پیاده‌سازی شود.</div>
-        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>بازگشت</button><button class="form-btn primary" type="button" data-next>بررسی اطلاعات</button></div>
-      </div>
-
-      <div class="step" data-step="4">
-        <h1>تقریباً تمام شد</h1>
-        <p class="sub">اطلاعات و مدارک را بررسی کنید. اگر درست است، ثبت‌نام را ارسال کنید.</p>
-        <div class="review" id="dReview"></div>
-        <div class="actions-row"><button class="form-btn secondary" type="button" data-prev>اصلاح اطلاعات</button><button class="form-btn primary" type="submit">ثبت درخواست همکاری</button></div>
-      </div>
-    </form>
-    <div class="success" id="dSuccess"><div class="ok">✓</div><h1>اطلاعات ثبت موقت شد</h1><p>رابط ثبت‌نام راننده آماده اتصال امن به سامانه واقعی Dash است. در نسخه فعلی، فایل مدارک به سرور ارسال نمی‌شود.</p><a class="btn primary" href="/">بازگشت به صفحه اصلی</a></div>
-  </section>
+<div aria-label="نوع درخواست" class="mode-switch" role="tablist">
+<button aria-selected="true" class="active" id="passengerTab" role="tab" type="button">درخواست راننده</button>
+<button aria-selected="false" id="driverTab" role="tab" type="button">ثبت‌نام راننده</button>
+</div>
+<section aria-label="درخواست راننده" class="form-card" id="passengerForm">
+<div class="progress-row"><span id="pStepText">مرحله ۱ از ۴</span><span>درخواست راننده</span></div>
+<div class="progress"><span id="pProgress"></span></div>
+<form id="pForm" novalidate="">
+<div class="step active" data-step="1">
+<h1>سفرتان را مشخص کنیم</h1>
+<p class="sub">اول فقط چند اطلاعات درباره مسیر می‌گیریم. اطلاعات حساس را در مراحل بعدی می‌پرسیم.</p>
+<div class="field">
+<label>برای چه کسی راننده می‌خواهید؟</label>
+<div class="choice-grid">
+<div class="choice"><input id="forSelf" name="forWhom" type="radio" value="self"/><label for="forSelf"><strong>برای خودم</strong><span>خودم مسافر و صاحب خودرو هستم.</span></label></div>
+<div class="choice"><input id="forOther" name="forWhom" type="radio" value="other"/><label for="forOther"><strong>برای شخص دیگری</strong><span>مثلاً برای یکی از اعضای خانواده.</span></label></div>
+</div>
+<div class="error">یکی از گزینه‌ها را انتخاب کنید.</div>
+</div>
+<div class="field"><label for="pDestination">می‌خواهید به کجا بروید؟</label><input autocomplete="street-address" id="pDestination" name="destination" placeholder="مثلاً: تهران، خیابان ولیعصر"/><small>مقصد سفر را بنویسید.</small><div class="error">مقصد را وارد کنید.</div></div>
+<div class="field"><label for="pPickup">محل سوار شدن مسافر</label><input autocomplete="street-address" id="pPickup" name="pickup" placeholder="مثلاً: تهران، میدان ونک"/><div class="error">محل سوار شدن را وارد کنید.</div></div>
+<div class="checkbox"><input id="sameCarPlace" type="checkbox"/><label for="sameCarPlace">محل حضور خودرو همان محل سوار شدن مسافر است.</label></div>
+<div class="field" id="carPlaceWrap"><label for="pCarPlace">خودرو در کجا قرار دارد؟</label><input autocomplete="street-address" id="pCarPlace" name="carPlace" placeholder="مثلاً: تهران، خیابان ملاصدرا"/><div class="error">محل خودرو را وارد کنید.</div></div>
+<div class="actions-row"><button class="form-btn primary" data-next="" type="button">ادامه درخواست</button></div>
+</div>
+<div class="step" data-step="2">
+<h1>اطلاعات تماس</h1>
+<p class="sub">برای هماهنگی درخواست، اطلاعات مسافر و در صورت نیاز صاحب خودرو را می‌گیریم.</p>
+<div class="field"><label for="pName">نام و نام خانوادگی مسافر</label><input autocomplete="name" id="pName" name="passengerName" placeholder="مثلاً: سارا احمدی"/><div class="error">نام و نام خانوادگی را وارد کنید.</div></div>
+<div class="field"><label for="pMobile">شماره موبایل مسافر</label><input autocomplete="tel" id="pMobile" inputmode="tel" name="passengerMobile" placeholder="مثلاً: 09121234567"/><div class="error">شماره موبایل را وارد کنید.</div></div>
+<div class="field"><label for="pNational">کد ملی مسافر</label><input id="pNational" inputmode="numeric" maxlength="10" name="passengerNationalId" placeholder="۱۰ رقم"/><small>برای ثبت صحیح، کد ملی را بدون فاصله وارد کنید.</small><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
+<div id="ownerFields">
+<div class="notice-mini">چون خودرو ممکن است متعلق به شخص دیگری باشد، اطلاعات صاحب خودرو را جداگانه می‌گیریم.</div>
+<div class="field"><label for="oName">نام و نام خانوادگی صاحب خودرو</label><input autocomplete="name" id="oName" name="ownerName" placeholder="مثلاً: علی رضایی"/><div class="error">نام صاحب خودرو را وارد کنید.</div></div>
+<div class="field"><label for="oMobile">شماره موبایل صاحب خودرو</label><input autocomplete="tel" id="oMobile" inputmode="tel" name="ownerMobile" placeholder="مثلاً: 09121234567"/><div class="error">شماره موبایل صاحب خودرو را وارد کنید.</div></div>
+<div class="field"><label for="oNational">کد ملی صاحب خودرو</label><input id="oNational" inputmode="numeric" maxlength="10" name="ownerNationalId" placeholder="۱۰ رقم"/><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
+</div>
+<div class="actions-row"><button class="form-btn secondary" data-prev="" type="button">بازگشت</button><button class="form-btn primary" data-next="" type="button">ادامه</button></div>
+</div>
+<div class="step" data-step="3">
+<h1>حالا خودرو را می‌شناسیم</h1>
+<p class="sub">این اطلاعات برای ثبت و تطبیق خودروی مورد درخواست لازم است.</p>
+<div class="field"><label for="plate">شماره پلاک خودرو</label><input id="plate" name="plate" placeholder="مثلاً: ۱۲ الف ۳۴۵ ایران ۶۷"/><div class="error">شماره پلاک را وارد کنید.</div></div>
+<div class="field"><label for="carModel">نام و مدل خودرو</label><input id="carModel" name="carModel" placeholder="مثلاً: پژو ۲۰۷ اتوماتیک"/><div class="error">نام و مدل خودرو را وارد کنید.</div></div>
+<div class="field"><label for="vin">کد VIN خودرو</label><input id="vin" inputmode="text" maxlength="17" name="vin" placeholder="کد ۱۷ رقمی VIN"/><details class="help"><summary>VIN را از کجا پیدا کنم؟</summary><p>VIN یک شناسه ۱۷ رقمی خودرو است. آن را از مدارک خودرو یا محل درج‌شده روی خودرو پیدا کنید.</p></details><div class="error">VIN را وارد کنید.</div></div>
+<div class="actions-row"><button class="form-btn secondary" data-prev="" type="button">بازگشت</button><button class="form-btn primary" data-next="" type="button">بررسی اطلاعات</button></div>
+</div>
+<div class="step" data-step="4">
+<h1>تقریباً تمام شد</h1>
+<p class="sub">اطلاعات را یک‌بار بررسی کنید. اگر درست است، درخواست را ثبت کنید.</p>
+<div class="review" id="pReview"></div>
+<div class="notice-mini">اطلاعات هویتی و خودرو برای فرایند واقعی خدمت باید مطابق سیاست حریم خصوصی و شرایط رسمی Dash دریافت و نگهداری شود.</div>
+<div class="actions-row"><button class="form-btn secondary" data-prev="" type="button">اصلاح اطلاعات</button><button class="form-btn primary" type="submit">ثبت درخواست راننده</button></div>
+</div>
+</form>
+<div class="success" id="pSuccess"><div class="ok">✓</div><h1>اطلاعات شما ثبت موقت شد</h1><p>رابط فرم آماده اتصال به سامانه واقعی Dash است. در نسخه فعلی، داده‌ها فقط برای تست در همین مرورگر ذخیره می‌شوند و هنوز به سرور ارسال نمی‌شوند.</p><a class="btn primary" href="/">بازگشت به صفحه اصلی</a></div>
+</section>
+<section aria-label="ثبت‌نام راننده" class="form-card" hidden="" id="driverForm">
+<div class="progress-row"><span id="dStepText">مرحله ۱ از ۴</span><span>ثبت‌نام راننده</span></div>
+<div class="progress"><span id="dProgress"></span></div>
+<form id="dForm" novalidate="">
+<div class="step active" data-step="1">
+<h1>راننده Dash شوید</h1>
+<p class="sub">اول اطلاعات پایه را می‌گیریم. مدارک لازم را در مراحل بعدی دریافت می‌کنیم.</p>
+<div class="field"><label for="dName">نام و نام خانوادگی</label><input autocomplete="name" id="dName" name="driverName" placeholder="مثلاً: علی رضایی"/><div class="error">نام و نام خانوادگی را وارد کنید.</div></div>
+<div class="field"><label for="dMobile">شماره موبایل</label><input autocomplete="tel" id="dMobile" inputmode="tel" name="driverMobile" placeholder="مثلاً: 09121234567"/><div class="error">شماره موبایل را وارد کنید.</div></div>
+<div class="field"><label for="dNational">کد ملی</label><input id="dNational" inputmode="numeric" maxlength="10" name="driverNationalId" placeholder="۱۰ رقم"/><div class="error">کد ملی باید ۱۰ رقمی باشد.</div></div>
+<div class="actions-row"><button class="form-btn primary" data-next="" type="button">ادامه ثبت‌نام</button></div>
+</div>
+<div class="step" data-step="2">
+<h1>هویت شما را تأیید می‌کنیم</h1>
+<p class="sub">برای حفظ امنیت کاربران، تصاویر هر دو طرف کارت ملی را برای بررسی مدارک دریافت می‌کنیم.</p>
+<div class="field"><label for="idFront">روی کارت ملی</label><div class="upload"><input accept="image/*" data-preview="idFrontPreview" id="idFront" name="idFront" type="file"/><div class="preview" id="idFrontPreview"></div></div><div class="error">تصویر روی کارت ملی را اضافه کنید.</div></div>
+<div class="field"><label for="idBack">پشت کارت ملی</label><div class="upload"><input accept="image/*" data-preview="idBackPreview" id="idBack" name="idBack" type="file"/><div class="preview" id="idBackPreview"></div></div><div class="error">تصویر پشت کارت ملی را اضافه کنید.</div></div>
+<div class="actions-row"><button class="form-btn secondary" data-prev="" type="button">بازگشت</button><button class="form-btn primary" data-next="" type="button">ادامه</button></div>
+</div>
+<div class="step" data-step="3">
+<h1>گواهینامه رانندگی</h1>
+<p class="sub">برای بررسی صلاحیت رانندگی، تصویر هر دو طرف گواهینامه را اضافه کنید.</p>
+<div class="field"><label for="licFront">روی گواهینامه</label><div class="upload"><input accept="image/*" data-preview="licFrontPreview" id="licFront" name="licFront" type="file"/><div class="preview" id="licFrontPreview"></div></div><div class="error">تصویر روی گواهینامه را اضافه کنید.</div></div>
+<div class="field"><label for="licBack">پشت گواهینامه</label><div class="upload"><input accept="image/*" data-preview="licBackPreview" id="licBack" name="licBack" type="file"/><div class="preview" id="licBackPreview"></div></div><div class="error">تصویر پشت گواهینامه را اضافه کنید.</div></div>
+<div class="notice-mini">تصاویر مدارک اطلاعات حساسی دارند؛ قبل از فعال‌سازی ارسال واقعی، مسیر امن دریافت، ذخیره و دسترسی به مدارک باید در بک‌اند Dash پیاده‌سازی شود.</div>
+<div class="actions-row"><button class="form-btn secondary" data-prev="" type="button">بازگشت</button><button class="form-btn primary" data-next="" type="button">بررسی اطلاعات</button></div>
+</div>
+<div class="step" data-step="4">
+<h1>تقریباً تمام شد</h1>
+<p class="sub">اطلاعات و مدارک را بررسی کنید. اگر درست است، ثبت‌نام را ارسال کنید.</p>
+<div class="review" id="dReview"></div>
+<div class="actions-row"><button class="form-btn secondary" data-prev="" type="button">اصلاح اطلاعات</button><button class="form-btn primary" type="submit">ثبت درخواست همکاری</button></div>
+</div>
+</form>
+<div class="success" id="dSuccess"><div class="ok">✓</div><h1>اطلاعات ثبت موقت شد</h1><p>رابط ثبت‌نام راننده آماده اتصال امن به سامانه واقعی Dash است. در نسخه فعلی، فایل مدارک به سرور ارسال نمی‌شود.</p><a class="btn primary" href="/">بازگشت به صفحه اصلی</a></div>
+</section>
 </main>
-
 <script>
 (() => {
   const $ = s => document.querySelector(s);
@@ -238,4 +227,4 @@
   $('#forSelf').click();
 })();
 </script>
-</article></section></main><footer class="footer"><div class="wrap footer-top"><div><strong>دش</strong><div style="margin-top:6px">راننده جایگزین برای خودروی شخصی</div></div><div class="footerlinks"><a href="/about.html">درباره دش</a><a href="/faq.html">سؤالات متداول</a><a href="/request.html">درخواست راننده</a><a href="/request.html#driver">ثبت‌نام راننده</a><a href="/chekhabar/">چخبر؟</a></div></div><div class="wrap" style="margin-top:20px">© دش — اطلاعات آموزشی و شرایط خدمت ممکن است تغییر کند؛ شرایط فعال سرویس را هنگام درخواست بررسی کنید.</div></footer></html>
+</article></section></main><footer class="footer"><div class="wrap footer-top"><div><strong>دش</strong><div style="margin-top:6px">راننده جایگزین برای خودروی شخصی</div></div><div class="footerlinks"><a href="/about.html">درباره دش</a><a href="/faq.html">سؤالات متداول</a><a href="/request.html">درخواست راننده</a><a href="/request.html#driver">ثبت‌نام راننده</a><a href="/chekhabar/">چخبر؟</a></div></div><div class="wrap" style="margin-top:20px">© دش — اطلاعات آموزشی و شرایط خدمت ممکن است تغییر کند؛ شرایط فعال سرویس را هنگام درخواست بررسی کنید.</div></footer></body></html>
