@@ -1,10 +1,19 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "small-bonus-efaf",
+  "main": "worker.js",
   "compatibility_date": "2026-09-07",
   "assets": {
     "directory": ".",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dash-contact",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+    }
+  ]
 }

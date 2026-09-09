@@ -1,16 +1,7 @@
-# استقرار نهایی دش روی Cloudflare Workers
+# Dash deployment
 
-این نسخه عمداً یک درخت فایل یکپارچه و flat دارد: `index.html` در ریشه است و `chekhabar/` فقط یک بخش از سایت است، نه صفحه اصلی.
+این نسخه عمداً بر پایه UI اصلی Dash ساخته شده است. `index.html` باید مستقیماً در ریشه Repository باشد. پوشه `chekhabar/` فقط بخش مجله است و نباید جایگزین صفحه اصلی شود.
 
-## Cloudflare
-- Repository: `sarakardo/Dash-site`
-- Branch: `main`
-- Build command: None
-- Deploy command: `npx wrangler deploy`
-- Root directory: `/`
-- `wrangler.jsonc` از `assets.directory = "."` استفاده می‌کند.
+تصاویر PNG در `assets/` قرار گرفته‌اند تا سرویس استاتیک Cloudflare بدون وابستگی به رندر SVG آن‌ها را سرو کند.
 
-## نکته مهم
-این بسته برای جایگزینی کامل محتوای repository ساخته شده است. فایل‌های قدیمی نباید کنار فایل‌های این بسته باقی بمانند، چون هدف این است که یک درخت واحد و بدون نسخه‌های متناقض deploy شود.
-
-پس از فعال شدن دامنه نهایی `dashh.ir`، canonical/OG/sitemap باید از Worker URL به دامنه نهایی تغییر داده شوند.
+Cloudflare Worker: `small-bonus-efaf`

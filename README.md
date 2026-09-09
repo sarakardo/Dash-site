@@ -1,9 +1,5 @@
-# Dash — نسخه یکپارچه نهایی
+# Dash website — SEO/AI content MVP
 
-این نسخه، ساختار اصلی سایت دش را حفظ می‌کند و فقط بخش «چخبر؟» و دارایی‌های تصویری/محتوایی تکمیلی را به آن اضافه می‌کند.
+نسخه ارتقایافته شامل محتوای سناریومحور، FAQ جامع، صفحات راننده جایگزین و تصویرسازی ایرانی است.
 
-- صفحه اصلی: `index.html`
-- درخواست راننده: `request.html`
-- مجله: `chekhabar/index.html`
-- تصاویر: `assets/`
-- استقرار Cloudflare: `wrangler.jsonc`
+Deploy command: `npx wrangler deploy`
