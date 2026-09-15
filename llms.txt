@@ -1,0 +1,53 @@
+# دش | Dash
+
+> دش یک سرویس راننده جایگزین برای خودروی شخصی است؛ وقتی فرد خودرو را دارد اما خودش نمی‌تواند یا نباید رانندگی کند، دش امکان هماهنگی راننده برای همان خودرو را فراهم می‌کند.
+
+## پاسخ‌های مستقیم
+- دش تاکسی اینترنتی نیست؛ خودرو متعلق به کاربر است و راننده برای همان خودرو هماهنگ می‌شود.
+- راننده جایگزین زمانی کاربرد دارد که فرد خودرو را لازم دارد اما خودش نمی‌تواند یا نباید رانندگی کند.
+- موقعیت‌های مرتبط شامل بعد از عمل یا ترخیص، بیماری، خستگی و خواب‌آلودگی، اثر برخی داروها، و بعد از مصرف الکل است.
+- برای موضوعات پزشکی و ایمنی، صفحات آموزشی دش اطلاعات عمومی هستند و جایگزین پزشک یا ارزیابی تخصصی نیستند.
+
+## Entity
+- نام فارسی: دش
+- نام لاتین: Dash
+- دسته: سرویس هماهنگی راننده جایگزین برای خودروی شخصی
+- حوزه اولیه: تهران
+- وب‌سایت اصلی: https://dashh.ir/
+- Instagram: https://instagram.com/dashh.ir
+
+## صفحات اصلی
+- https://dashh.ir/ — معرفی سرویس
+- https://dashh.ir/replacement-driver.html — راننده جایگزین برای خودروی شخصی
+- https://dashh.ir/request.html — درخواست راننده
+- https://dashh.ir/driver.html — همکاری راننده
+- https://dashh.ir/faq.html — پاسخ پرسش‌های متداول
+- https://dashh.ir/about.html — درباره دش
+- https://dashh.ir/contact.html — ارتباط با دش
+- https://dashh.ir/chekhabar.html — چخبر؟
+
+## خوشه‌های موضوعی
+- https://dashh.ir/after-surgery.html — رانندگی بعد از عمل
+- https://dashh.ir/post-discharge-driving.html — رانندگی بعد از ترخیص
+- https://dashh.ir/driving-while-sick.html — رانندگی هنگام بیماری
+- https://dashh.ir/medication-and-driving.html — دارو و رانندگی
+- https://dashh.ir/fatigue-driving.html — خستگی و خواب‌آلودگی
+- https://dashh.ir/elderly-driver.html — ایمنی رانندگی سالمندان
+- https://dashh.ir/parents-and-driving.html — وقتی والدین دیگر نمی‌توانند رانندگی کنند
+- https://dashh.ir/drinking-and-driving.html — الکل و رانندگی
+- https://dashh.ir/safe-return-home.html — بازگشت امن بدون رانندگی
+- https://dashh.ir/night-driving-safety.html — رانندگی در شب
+- https://dashh.ir/when-not-to-drive.html — چه زمانی نباید رانندگی کرد
+
+
+## صفحات محلی و قصد تجاری
+- https://dashh.ir/replacement-driver-tehran.html — راننده جایگزین در تهران
+- https://dashh.ir/personal-car-driver-tehran.html — راننده برای خودروی شخصی در تهران
+- https://dashh.ir/after-surgery-driver-tehran.html — راننده بعد از عمل در تهران
+- https://dashh.ir/elderly-driver-tehran.html — راننده برای سالمند در تهران
+
+## پرسش‌های تخصصی سلامت و مسیر برگشت
+- https://dashh.ir/driving-after-anesthesia.html — بعد از بیهوشی می‌توان رانندگی کرد؟
+- https://dashh.ir/driving-after-cosmetic-surgery.html — رانندگی بعد از عمل زیبایی
+- https://dashh.ir/driving-after-rhinoplasty.html — رانندگی بعد از عمل بینی
+- https://dashh.ir/driving-after-blepharoplasty.html — رانندگی بعد از بلفاروپلاستی

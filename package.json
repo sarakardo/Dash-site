@@ -1,0 +1,11 @@
+{
+  "name": "dash-site",
+  "private": true,
+  "scripts": {
+    "deploy": "npx wrangler deploy",
+    "check": "node preflight.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.36.0"
+  }
+}

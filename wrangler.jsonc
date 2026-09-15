@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/configuration/schema.json",
+  "name": "small-bonus-efaf",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-11",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dash_requests",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCS",
+      "bucket_name": "dash-driver-docs"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "PUBLIC_WRITE_LIMITER",
+      "namespace_id": "2026091101",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    },
+    {
+      "name": "ADMIN_LOGIN_LIMITER",
+      "namespace_id": "2026091102",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+  "vars": {
+    "SITE_ORIGIN": "https://small-bonus-efaf.hesesh0610.workers.dev",
+    "SITE_ORIGIN_2": "https://dashh.ir",
+    "TURNSTILE_ENABLED": "false",
+    "TURNSTILE_SITE_KEY": "",
+    "RATE_LIMIT_PER_WINDOW": "6",
+    "RATE_LIMIT_WINDOW_SECONDS": "600"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
