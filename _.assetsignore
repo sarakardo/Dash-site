@@ -1,0 +1,10 @@
+node_modules
+.git
+package.json
+bun.lock
+bun.lockb
+package-lock.json
+wrangler.jsonc
+wrangler.json
+wrangler.toml
+.assetsignore
