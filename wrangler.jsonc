@@ -16,7 +16,7 @@
     {
       "binding": "DB",
       "database_name": "dash_requests",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+      "database_id": ""database_id": "c7d937ed-0a99-4e5a-bbb5-5d4849e5498b"
     }
   ],
   "r2_buckets": [
