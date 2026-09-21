@@ -77,12 +77,49 @@ async function encKey(env){if(!env.DATA_ENCRYPTION_KEY)throw new Error('DATA_ENC
 async function encryptField(env,plaintext){const key=await encKey(env);const iv=crypto.getRandomValues(new Uint8Array(12));const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(plaintext)));return `${base64url(iv)}.${base64url(ct)}`}
 async function decryptField(env,packed){if(!packed)return '';const [iv,data]=String(packed).split('.');const p=await crypto.subtle.decrypt({name:'AES-GCM',iv:fromBase64url(iv)},await encKey(env),fromBase64url(data));return new TextDecoder().decode(p)}
 
+function toHex(bytes){return [...bytes].map(b=>b.toString(16).padStart(2,'0')).join('')}
+async function sha256Hex(input){const bytes=typeof input==='string'?new TextEncoder().encode(input):new Uint8Array(input);return toHex(await sha256(bytes))}
+async function hmacRawBytes(keyBytes,msg){const key=await crypto.subtle.importKey('raw',keyBytes,{name:'HMAC',hash:'SHA-256'},false,['sign']);return new Uint8Array(await crypto.subtle.sign('HMAC',key,typeof msg==='string'?new TextEncoder().encode(msg):msg))}
+function arvanConfigured(env){return !!(clean(env.ARVAN_ACCESS_KEY,200)&&clean(env.ARVAN_SECRET_KEY,200)&&clean(env.ARVAN_S3_ENDPOINT,200))}
+async function s3Request(env,method,key,opts={}){
+  const accessKey=clean(env.ARVAN_ACCESS_KEY,200),secretKey=clean(env.ARVAN_SECRET_KEY,200);
+  const endpointHost=clean(env.ARVAN_S3_ENDPOINT,200).replace(/^https?:\/\//,'').replace(/\/$/,'');
+  const bucket=clean(env.ARVAN_S3_BUCKET,100)||'dash-driver-docs';
+  const region=clean(env.ARVAN_S3_REGION,60)||'ir-thr-at1';
+  if(!accessKey||!secretKey||!endpointHost)throw new Error('Arvan object storage not configured');
+  const host=`${bucket}.${endpointHost}`;
+  const canonicalUri='/'+key.split('/').map(encodeURIComponent).join('/');
+  const url=`https://${host}${canonicalUri}`;
+  const now=new Date(),amzDate=now.toISOString().replace(/[:-]|\.\d{3}/g,''),dateStamp=amzDate.slice(0,8);
+  const bodyBytes=opts.body?new Uint8Array(opts.body):new Uint8Array();
+  const payloadHash=await sha256Hex(bodyBytes);
+  const headers={host,'x-amz-content-sha256':payloadHash,'x-amz-date':amzDate};
+  if(opts.contentType)headers['content-type']=opts.contentType;
+  const signedKeys=Object.keys(headers).sort();
+  const canonicalHeaders=signedKeys.map(k=>`${k}:${headers[k]}\n`).join('');
+  const signedHeaders=signedKeys.join(';');
+  const canonicalRequest=[method,canonicalUri,'',canonicalHeaders,signedHeaders,payloadHash].join('\n');
+  const credentialScope=`${dateStamp}/${region}/s3/aws4_request`;
+  const stringToSign=['AWS4-HMAC-SHA256',amzDate,credentialScope,await sha256Hex(canonicalRequest)].join('\n');
+  const kDate=await hmacRawBytes(new TextEncoder().encode('AWS4'+secretKey),dateStamp);
+  const kRegion=await hmacRawBytes(kDate,region);
+  const kService=await hmacRawBytes(kRegion,'s3');
+  const kSigning=await hmacRawBytes(kService,'aws4_request');
+  const signature=toHex(await hmacRawBytes(kSigning,stringToSign));
+  const authorization=`AWS4-HMAC-SHA256 Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+  const fetchHeaders={'x-amz-content-sha256':payloadHash,'x-amz-date':amzDate,'Authorization':authorization};
+  if(opts.contentType)fetchHeaders['content-type']=opts.contentType;
+  return fetch(url,{method,headers:fetchHeaders,body:method==='PUT'?bodyBytes:undefined});
+}
+async function s3PutObject(env,key,buffer,contentType){const r=await s3Request(env,'PUT',key,{body:buffer,contentType});if(!r.ok)throw new Error(`Arvan upload failed (${r.status})`)}
+async function s3GetObject(env,key){const r=await s3Request(env,'GET',key);return r.ok?r:null}
+async function s3DeleteObject(env,key){try{await s3Request(env,'DELETE',key)}catch{}}
+
 let schemaReady=false;
 async function ensureSchema(env){
   if(!env.DB) return false;
   if(schemaReady) return true;
   await env.DB.exec(SCHEMA);
-  // Lightweight forward-compatibility for an older Dash database created by a previous build.
   const info=await env.DB.prepare('PRAGMA table_info(requests)').all();
   const existing=new Set((info.results||[]).map(r=>r.name));
   const additions={
@@ -197,11 +234,11 @@ async function saveDriver(env,parsed,ctx){
   const byKey=new Map(parsed.files.map(f=>[f.key,f]));for(const [key,label] of DOC_FIELDS){const file=byKey.get(key);if(!file)return json({ok:false,error:`${label} را اضافه کنید.`},400);if(!['image/jpeg','image/png','image/webp'].includes(file.type))return json({ok:false,error:`فرمت ${label} باید JPG، PNG یا WebP باشد.`},400);if(file.size<1||file.size>5*1024*1024)return json({ok:false,error:`حجم ${label} باید حداکثر ۵ مگابایت باشد.`},400);if(!magicMatches(file.type,file.buffer))return json({ok:false,error:`محتوای ${label} با فرمت اعلام‌شده سازگار نیست.`},400)}
   const idem=clean(f.idempotencyKey,100)||newId('IDEM');const existing=await env.DB.prepare('SELECT id FROM requests WHERE idempotency_key=?').bind(idem).first();if(existing)return json({ok:true,requestId:existing.id,duplicate:true,message:'درخواست همکاری شما قبلاً دریافت شده است.'});
   const id=newId('DRV'),now=new Date().toISOString(),docs=[];try{
-    for(const [key,label] of DOC_FIELDS){const file=byKey.get(key),ext=file.type.split('/')[1].replace('jpeg','jpg'),objectKey=`driver/${id}/${crypto.randomUUID()}.${ext}`;await env.DOCS.put(objectKey,file.buffer,{httpMetadata:{contentType:file.type,cacheControl:'private, no-store'}});docs.push({label,key:objectKey,type:file.type,size:file.size})}
+    for(const [key,label] of DOC_FIELDS){const file=byKey.get(key),ext=file.type.split('/')[1].replace('jpeg','jpg'),objectKey=`driver/${id}/${crypto.randomUUID()}.${ext}`;await s3PutObject(env,objectKey,file.buffer,file.type);docs.push({label,key:objectKey,type:file.type,size:file.size})}
     const nat=await encryptField(env,digits(f.driverNationalId));await env.DB.prepare(`INSERT INTO requests(id,type,status,created_at,updated_at,idempotency_key,driver_name,driver_mobile,driver_national_id_enc,documents_json,consent_at,privacy_version,metadata_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)`).bind(id,'driver_application','new',now,now,idem,clean(f.driverName),digits(f.driverMobile),nat,JSON.stringify(docs),now,'v1',JSON.stringify({source:'website',document_count:docs.length})).run();
     notifyRequest(ctx,env,driverNotification(f,id));
     return json({ok:true,requestId:id,message:'درخواست همکاری و مدارک شما دریافت شد. برای ادامه با شما تماس می‌گیریم.'});
-  }catch(e){for(const d of docs){try{await env.DOCS.delete(d.key)}catch{}}throw e}
+  }catch(e){for(const d of docs){await s3DeleteObject(env,d.key)}throw e}
 }
 async function saveContact(env,fields,ctx){if(!clean(fields.name,100)||!clean(fields.message,2000)||!clean(fields.contact,100))return json({ok:false,error:'نام، راه ارتباطی و پیام را کامل کنید.'},400);if(clean(fields.website))return json({ok:false,error:'درخواست نامعتبر است.'},400);const idem=clean(fields.idempotencyKey,100)||newId('IDEM');const ex=await env.DB.prepare('SELECT id FROM requests WHERE idempotency_key=?').bind(idem).first();if(ex)return json({ok:true,requestId:ex.id,duplicate:true,message:'پیام شما قبلاً دریافت شده است.'});const id=newId('MSG'),now=new Date().toISOString();await env.DB.prepare(`INSERT INTO requests(id,type,status,created_at,updated_at,idempotency_key,contact_name,contact_method,contact_message,consent_at,privacy_version,metadata_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`).bind(id,'contact','new',now,now,idem,clean(fields.name,100),clean(fields.contact,100),clean(fields.message,2000),now,'v1',JSON.stringify({source:'website'})).run();notifyRequest(ctx,env,contactNotification(fields,id));return json({ok:true,requestId:id,message:'پیامتان دریافت شد. با شما تماس می‌گیریم.'})}
 
@@ -238,8 +275,8 @@ async function maskedNational(env,packed){
 }
 async function adminStatus(request,env){const g=await requireAdmin(request,env,true);if(!g.ok)return g.response;const body=await request.json().catch(()=>null),id=clean(body?.id,80),status=clean(body?.status,30);const allowed=new Set(['new','contacted','driver_found','in_progress','completed','cancelled']);if(!id||!allowed.has(status))return json({ok:false,error:'وضعیت نامعتبر است.'},400);const now=new Date().toISOString(),r=await env.DB.prepare('UPDATE requests SET status=?,updated_at=? WHERE id=?').bind(status,now,id).run();if(!r.meta?.changes)return json({ok:false,error:'درخواست پیدا نشد.'},404);await audit(env,'status_change',id,{status});return json({ok:true})}
 async function adminNotes(request,env){const g=await requireAdmin(request,env,true);if(!g.ok)return g.response;const b=await request.json().catch(()=>null),id=clean(b?.id,80),notes=clean(b?.notes,3000);if(!id)return json({ok:false,error:'درخواست نامعتبر است.'},400);const r=await env.DB.prepare('UPDATE requests SET notes=?,updated_at=? WHERE id=?').bind(notes,new Date().toISOString(),id).run();if(!r.meta?.changes)return json({ok:false,error:'درخواست پیدا نشد.'},404);await audit(env,'notes_update',id);return json({ok:true})}
-async function adminDelete(request,env){const g=await requireAdmin(request,env,true);if(!g.ok)return g.response;const b=await request.json().catch(()=>null),id=clean(b?.id,80);if(!id)return json({ok:false,error:'شناسه نامعتبر است.'},400);const row=await env.DB.prepare('SELECT documents_json FROM requests WHERE id=?').bind(id).first();if(!row)return json({ok:false,error:'درخواست پیدا نشد.'},404);if(row.documents_json&&env.DOCS){for(const d of JSON.parse(row.documents_json)||[]){try{await env.DOCS.delete(d.key)}catch{}}}await env.DB.prepare('DELETE FROM requests WHERE id=?').bind(id).run();await audit(env,'request_delete',id);return json({ok:true})}
-async function adminDocument(request,env){const g=await requireAdmin(request,env,false);if(!g.ok)return g.response;if(!env.DOCS)return json({ok:false,error:'فضای مدارک متصل نیست.'},503);const key=new URL(request.url).searchParams.get('key')||'';if(!/^driver\/[^/]+\/[A-Za-z0-9-]+\.(jpg|png|webp)$/.test(key))return json({ok:false,error:'کلید فایل نامعتبر است.'},400);const o=await env.DOCS.get(key);if(!o)return json({ok:false,error:'مدرک پیدا نشد.'},404);const h=new Headers();o.writeHttpMetadata(h);h.set('Cache-Control','private, no-store, max-age=0');h.set('Content-Disposition','inline');return new Response(o.body,{headers:h})}
+async function adminDelete(request,env){const g=await requireAdmin(request,env,true);if(!g.ok)return g.response;const b=await request.json().catch(()=>null),id=clean(b?.id,80);if(!id)return json({ok:false,error:'شناسه نامعتبر است.'},400);const row=await env.DB.prepare('SELECT documents_json FROM requests WHERE id=?').bind(id).first();if(!row)return json({ok:false,error:'درخواست پیدا نشد.'},404);if(row.documents_json&&arvanConfigured(env)){for(const d of JSON.parse(row.documents_json)||[]){await s3DeleteObject(env,d.key)}}await env.DB.prepare('DELETE FROM requests WHERE id=?').bind(id).run();await audit(env,'request_delete',id);return json({ok:true})}
+async function adminDocument(request,env){const g=await requireAdmin(request,env,false);if(!g.ok)return g.response;if(!arvanConfigured(env))return json({ok:false,error:'فضای مدارک متصل نیست.'},503);const key=new URL(request.url).searchParams.get('key')||'';if(!/^driver\/[^/]+\/[A-Za-z0-9-]+\.(jpg|png|webp)$/.test(key))return json({ok:false,error:'کلید فایل نامعتبر است.'},400);const o=await s3GetObject(env,key);if(!o)return json({ok:false,error:'مدرک پیدا نشد.'},404);const h=new Headers();const ct=o.headers.get('content-type');if(ct)h.set('Content-Type',ct);h.set('Cache-Control','private, no-store, max-age=0');h.set('Content-Disposition','inline');return new Response(o.body,{headers:h})}
 
 export default {async fetch(request,env,ctx){const u=new URL(request.url);try{
   const method=request.method;
@@ -265,7 +302,7 @@ export default {async fetch(request,env,ctx){const u=new URL(request.url);try{
     const parsed=await readMultipart(request);if(clean(parsed.fields.website))return json({ok:false,error:'درخواست نامعتبر است.'},400);
     if(!(await verifyTurnstile(request,env,clean(parsed.fields.turnstileToken,500))))return json({ok:false,error:'تأیید امنیتی انجام نشد. صفحه را تازه کنید و دوباره تلاش کنید.'},403);
     const type=clean(parsed.fields.type,40);
-    if(type==='driver_application'){if(!env.DOCS)return json({ok:false,error:'فضای امن دریافت مدارک هنوز متصل نشده است.'},503);return saveDriver(env,parsed,ctx)}
+    if(type==='driver_application'){if(!arvanConfigured(env))return json({ok:false,error:'فضای امن دریافت مدارک هنوز متصل نشده است.'},503);return saveDriver(env,parsed,ctx)}
     if(type==='contact')return saveContact(env,parsed.fields,ctx);return savePassenger(env,parsed.fields,ctx)
   }
   if(u.pathname==='/api/admin/requests'&&method==='GET'){await ensureSchema(env);return adminList(request,env)}
