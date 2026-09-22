@@ -19,10 +19,6 @@
       "database_id": "c7d937ed-0a99-4e5a-bbb5-5d4849e5498b"
     }
   ],
-  "r2_buckets": [
-    {
-      "binding": "DOCS",
-      "bucket_name": "dash-driver-docs"
     }
   ],
   "ratelimits": [
