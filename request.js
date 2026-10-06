@@ -103,6 +103,8 @@
       let ok = true;
       active.querySelectorAll('input:not([type=file]):not([type=radio]):not([type=checkbox]), select, textarea').forEach((el) => {
         if (el.dataset.optional === 'true') return;
+        const wrap = el.closest('.field');
+        if (wrap && wrap.offsetParent === null) return;
         if (!requiredField(el)) ok = false;
       });
 
@@ -178,10 +180,18 @@
       if (prefix === 'd') fd.set('type', 'driver_application');
       else fd.set('type', 'passenger_request');
       try {
-        const response = await fetch('/api/requests', {
-          method: 'POST', credentials: 'same-origin',
-          headers: {'Accept':'application/json'}, body: fd
-        });
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 45000);
+        let response;
+        try {
+          response = await fetch('/api/requests', {
+            method: 'POST', credentials: 'same-origin',
+            headers: {'Accept':'application/json'}, body: fd,
+            signal: controller.signal
+          });
+        } finally {
+          clearTimeout(timeoutId);
+        }
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !data.ok) throw new Error(data.error || 'ثبت درخواست انجام نشد.');
         form.hidden = true;
@@ -196,6 +206,7 @@
         resetTurnstile(formId);
         const alert = document.createElement('div');
         alert.className = 'notice-mini';
+        if (error && error.name === 'AbortError') error = {message: 'پاسخی از سرور دریافت نشد. اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.'};
         alert.setAttribute('role','alert');
         alert.textContent = error.message || 'در ثبت درخواست مشکلی پیش آمد. دوباره تلاش کنید.';
         form.prepend(alert);
