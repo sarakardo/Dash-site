@@ -1,0 +1,28 @@
+چک‌لیست بعد از کامیت — دش
+
+مهم: این بسته ZIP را به‌عنوان یک فایل داخل مخزن آپلود نکن.
+
+A) فایل‌های جدید
+[ ] chekhabar/why-choose-dash.html
+[ ] chekhabar/how-to-find-driver-for-personal-car.html
+
+B) ادغام در فایل‌های فعلی (فایل کامل را با snippet عوض نکن)
+[ ] قطعه chekhabar-links-snippet.html را با ساختار و کلاس‌های موجود به chekhabar.html اضافه کن.
+[ ] دو ورودی sitemap-additions.xml را داخل urlset فایل sitemap.xml فعلی اضافه کن؛ ابتدا بررسی کن URL تکراری نباشد.
+[ ] دو مدخل llms-additions.txt را به llms.txt فعلی اضافه کن؛ متن قبلی را حفظ کن.
+
+C) Workflow
+[ ] .github/workflows/indexnow.yml را فقط پس از مقایسه با نسخه فعلی ادغام کن.
+[ ] مطمئن شو کلید IndexNow در ریشه دامنه واقعاً پاسخ 200 می‌دهد.
+[ ] مطمئن شو GitHub Actions secret موردنیاز workflow تنظیم است؛ secret را در کد یا فایل عمومی قرار نده.
+
+D) بعد از Deploy
+[ ] هر دو URL مقاله پاسخ 200 بدهند.
+[ ] canonical هر مقاله به خودش اشاره کند.
+[ ] robots.txt صفحه‌ها را مسدود نکند و صفحه‌ها noindex نباشند.
+[ ] هر دو URL در sitemap.xml و لینک‌های داخلی وجود داشته باشند.
+[ ] Google Search Console → URL Inspection → Test Live URL → Request indexing.
+[ ] در Rich Results Test داده Article/Breadcrumb را بررسی کن.
+[ ] بعد از چند روز تا چند هفته، Pages indexing و Impression/Click را دوباره بررسی کن.
+
+IndexNow جایگزین Google Search Console نیست و هیچ روش ارسال URL، ایندکس‌شدن را تضمین نمی‌کند.

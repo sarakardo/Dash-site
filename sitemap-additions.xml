@@ -1,0 +1,9 @@
+<!-- این دو URL را داخل عنصر <urlset> فایل sitemap.xml موجود اضافه کن؛ کل sitemap را با این قطعه جایگزین نکن. -->
+<url>
+  <loc>https://dashh.ir/chekhabar/why-choose-dash.html</loc>
+  <lastmod>2026-10-06</lastmod>
+</url>
+<url>
+  <loc>https://dashh.ir/chekhabar/how-to-find-driver-for-personal-car.html</loc>
+  <lastmod>2026-10-06</lastmod>
+</url>
