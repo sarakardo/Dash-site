@@ -5,7 +5,7 @@
   const normalizeDigits = (v) => String(v ?? '').replace(/[۰-۹]/g, c => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(c)));
   const validMobile = (v) => /^09\d{9}$/.test(normalizeDigits(v).replace(/\s+/g, ''));
   const validNational = (v) => /^\d{10}$/.test(normalizeDigits(v));
-  const validVIN = (v) => /^[A-HJ-NPR-Za-hj-npr-z0-9]{17}$/.test(String(v || '').trim());
+  const validVIN = (v) => /^[A-HJ-NPR-Za-hj-npr-z0-9]{17}$/.test(normalizeDigits(String(v || '').trim()));
   const validName = (v) => /^[\u0600-\u06FF\u200c\sA-Za-z.\-]{2,100}$/.test(String(v || '').trim());
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
   const idem = () => crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
@@ -174,7 +174,7 @@
       fd.set('website', '');
       const turnstileToken=getTurnstileToken(formId);
       if(turnstileEnabled && !turnstileToken){
-        const alert=document.createElement('div');alert.className='notice-mini';alert.setAttribute('role','alert');alert.textContent='لطفاً تأیید امنیتی را کامل کنید.';form.prepend(alert);setTimeout(()=>alert.remove(),6000);if(submit){submit.disabled=false;submit.textContent=original;}return;
+        const alert=document.createElement('div');alert.className='notice-mini';alert.setAttribute('role','alert');alert.textContent='لطفاً تأیید امنیتی را کامل کنید.';(steps[current-1]||form).prepend(alert);alert.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>alert.remove(),6000);if(submit){submit.disabled=false;submit.textContent=original;}return;
       }
       fd.set('turnstileToken',turnstileToken);
       if (prefix === 'd') fd.set('type', 'driver_application');
@@ -209,7 +209,8 @@
         if (error && error.name === 'AbortError') error = {message: 'پاسخی از سرور دریافت نشد. اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.'};
         alert.setAttribute('role','alert');
         alert.textContent = error.message || 'در ثبت درخواست مشکلی پیش آمد. دوباره تلاش کنید.';
-        form.prepend(alert);
+        (steps[current-1]||form).prepend(alert);
+        alert.scrollIntoView({behavior:'smooth',block:'center'});
         setTimeout(() => alert.remove(), 7000);
       } finally {
         if (submit) { submit.disabled = false; submit.textContent = original; }
