@@ -1,0 +1,7 @@
+Static QA results (2026-10-11):
+- Two new HTML pages + one updated existing page.
+- Each page has exactly one H1, unique title versus V23 HTML pages, meta description, index/follow robots directive, and self-referencing canonical.
+- All JSON-LD script blocks parse as valid JSON.
+- Internal links in all three pages resolve to known V23 URLs or the other pages in this package.
+- Design system assets are reused through /style.css and /site.js; no CSS, homepage, request form, Worker, or Cloudflare configuration is changed.
+- The live website, deployed version, Search Console coverage and production URL response codes were not testable from this bundle build, so those remain post-deploy checks.
