@@ -77,6 +77,21 @@ async function encKey(env){if(!env.DATA_ENCRYPTION_KEY)throw new Error('DATA_ENC
 async function encryptField(env,plaintext){const key=await encKey(env);const iv=crypto.getRandomValues(new Uint8Array(12));const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(plaintext)));return `${base64url(iv)}.${base64url(ct)}`}
 async function decryptField(env,packed){if(!packed)return '';const [iv,data]=String(packed).split('.');const p=await crypto.subtle.decrypt({name:'AES-GCM',iv:fromBase64url(iv)},await encKey(env),fromBase64url(data));return new TextDecoder().decode(p)}
 
+async function readMultipart(request){
+  const formData = await request.formData();
+  const fields = {};
+  const files = [];
+  for (const [key, value] of formData.entries()) {
+    if (value && typeof value === 'object' && typeof value.arrayBuffer === 'function' && typeof value.type === 'string' && typeof value.size === 'number') {
+      const buffer = await value.arrayBuffer();
+      files.push({ key, type: value.type, size: value.size, buffer });
+    } else {
+      fields[key] = value;
+    }
+  }
+  return { fields, files };
+}
+
 let schemaReady=false;
 async function ensureSchema(env){
   if(!env.DB) return false;
