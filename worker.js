@@ -96,14 +96,57 @@ let schemaReady=false;
 async function ensureSchema(env){
   if(!env.DB) return false;
   if(schemaReady) return true;
-  await env.DB.exec(SCHEMA);
-  // Lightweight forward-compatibility for an older Dash database created by a previous build.
+  // Create the current table if this is a fresh database. On an existing D1
+  // database, do NOT execute all indexes before adding columns: old schemas can
+  // otherwise fail at CREATE INDEX and prevent both forms from submitting.
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS requests (
+    id TEXT PRIMARY KEY,
+    type TEXT NOT NULL DEFAULT 'passenger_request',
+    status TEXT NOT NULL DEFAULT 'new',
+    created_at TEXT NOT NULL DEFAULT '',
+    updated_at TEXT NOT NULL DEFAULT '',
+    idempotency_key TEXT,
+    passenger_name TEXT, passenger_mobile TEXT, passenger_national_id_enc TEXT,
+    owner_name TEXT, owner_mobile TEXT, owner_national_id_enc TEXT,
+    for_whom TEXT, pickup TEXT, car_place TEXT, destination TEXT, requested_at TEXT,
+    plate TEXT, car_model TEXT, vin TEXT,
+    driver_name TEXT, driver_mobile TEXT, driver_national_id_enc TEXT, documents_json TEXT,
+    contact_name TEXT, contact_method TEXT, contact_message TEXT,
+    consent_at TEXT, privacy_version TEXT, notes TEXT, metadata_json TEXT
+  )`).run();
   const info=await env.DB.prepare('PRAGMA table_info(requests)').all();
   const existing=new Set((info.results||[]).map(r=>r.name));
   const additions={
-    requested_at:'TEXT', consent_at:'TEXT', privacy_version:'TEXT', notes:'TEXT'
+    id:'TEXT', type:"TEXT DEFAULT 'passenger_request'", status:"TEXT DEFAULT 'new'",
+    created_at:"TEXT DEFAULT ''", updated_at:"TEXT DEFAULT ''", idempotency_key:'TEXT',
+    passenger_name:'TEXT', passenger_mobile:'TEXT', passenger_national_id_enc:'TEXT',
+    owner_name:'TEXT', owner_mobile:'TEXT', owner_national_id_enc:'TEXT', for_whom:'TEXT',
+    pickup:'TEXT', car_place:'TEXT', destination:'TEXT', requested_at:'TEXT', plate:'TEXT',
+    car_model:'TEXT', vin:'TEXT', driver_name:'TEXT', driver_mobile:'TEXT',
+    driver_national_id_enc:'TEXT', documents_json:'TEXT', contact_name:'TEXT',
+    contact_method:'TEXT', contact_message:'TEXT', consent_at:'TEXT', privacy_version:'TEXT',
+    notes:'TEXT', metadata_json:'TEXT'
   };
-  for(const [name,type] of Object.entries(additions)) if(!existing.has(name)) await env.DB.prepare(`ALTER TABLE requests ADD COLUMN ${name} ${type}`).run();
+  for(const [name,type] of Object.entries(additions)){
+    if(!existing.has(name)) await env.DB.prepare(`ALTER TABLE requests ADD COLUMN ${name} ${type}`).run();
+  }
+  // Build indexes only after migration has ensured every indexed column exists.
+  await env.DB.exec(`
+    CREATE INDEX IF NOT EXISTS idx_requests_type_created ON requests(type, created_at DESC);
+    CREATE INDEX IF NOT EXISTS idx_requests_status_created ON requests(status, created_at DESC);
+    CREATE INDEX IF NOT EXISTS idx_requests_passenger_mobile ON requests(passenger_mobile);
+    CREATE INDEX IF NOT EXISTS idx_requests_driver_mobile ON requests(driver_mobile);
+    CREATE TABLE IF NOT EXISTS rate_limits (
+      bucket_key TEXT NOT NULL, window_start INTEGER NOT NULL,
+      count INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (bucket_key, window_start)
+    );
+    CREATE INDEX IF NOT EXISTS idx_rate_limits_window ON rate_limits(window_start);
+    CREATE TABLE IF NOT EXISTS admin_audit (
+      id TEXT PRIMARY KEY, event TEXT NOT NULL, request_id TEXT,
+      created_at TEXT NOT NULL, metadata_json TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_admin_audit_created ON admin_audit(created_at DESC);
+  `);
   schemaReady=true;
   return true;
 }
@@ -130,7 +173,7 @@ function notifyRequest(ctx,env,text){
   if(notificationConfigured(env)) ctx.waitUntil(notifyBale(env,text));
 }
 function passengerNotification(f,id){
-  const lines=['🔔 درخواست جدید دش','',`شناسه: ${id}`,`نوع: درخواست راننده`,`نام: ${clean(f.passengerName,100)}`,`موبایل: ${digits(f.passengerMobile)}`,`مسیر: ${clean(f.pickup,180)} ← ${clean(f.destination,180)}`,`محل خودرو: ${clean(f.carPlace,180)}`,`زمان: ${clean(f.requestedAt,80)||'تعیین نشده'}`,`خودرو: ${clean(f.carModel,120)}`,`پلاک: ${clean(f.plate,40)}`];
+  const lines=['🔔 درخواست جدید دش','',`شناسه: ${id}`,`نوع: درخواست سفر`,`نام: ${clean(f.passengerName,100)}`,`موبایل: ${digits(f.passengerMobile)}`,`مسیر: ${clean(f.pickup,180)} ← ${clean(f.destination,180)}`,`محل خودرو: ${clean(f.carPlace,180)}`,`زمان: ${clean(f.requestedAt,80)||'تعیین نشده'}`,`خودرو: ${clean(f.carModel,120)}`,`پلاک: ${clean(f.plate,40)}`];
   if(clean(f.forWhom)==='other') lines.push(`برای: ${clean(f.ownerName,100)}`);
   return lines.join('\\n');
 }
@@ -270,7 +313,7 @@ export default {async fetch(request,env,ctx){const u=new URL(request.url);try{
     if(legacy[u.pathname]) return new Response(null,{status:301,headers:{'Location':`https://dashh.ir${legacy[u.pathname]}${u.search}`,'Strict-Transport-Security':'max-age=63072000; includeSubDomains; preload'}});
   }
   if(u.pathname==='/api/config'&&method==='GET'){return json({ok:true,turnstileEnabled:String(env.TURNSTILE_ENABLED||'').toLowerCase()==='true',turnstileSiteKey:env.TURNSTILE_SITE_KEY||'',privacyVersion:'v1'},200,{'Cache-Control':'public, max-age=300'});}
-  if(u.pathname==='/api/health'&&method==='GET'){const db=!!(env.DB&&await ensureSchema(env));return json({ok:true,ready:db&&!!env.DATA_ENCRYPTION_KEY&&!!env.ADMIN_SESSION_SECRET&&!!env.ADMIN_PASSWORD,turnstile: String(env.TURNSTILE_ENABLED||'').toLowerCase()==='true' ? !!env.TURNSTILE_SECRET&&!!env.TURNSTILE_SITE_KEY : false});}
+  if(u.pathname==='/api/health'&&method==='GET'){const db=!!(env.DB&&await ensureSchema(env));const encryption=!!env.DATA_ENCRYPTION_KEY;const admin=!!env.ADMIN_SESSION_SECRET&&!!env.ADMIN_PASSWORD;const documents=!!env.DOCS;const turnstileEnabled=String(env.TURNSTILE_ENABLED||'').toLowerCase()==='true';return json({ok:true,ready:db&&encryption&&admin&&documents,checks:{database:db,encryptionKey:encryption,adminSecrets:admin,documentStorage:documents,turnstileConfigured:!turnstileEnabled||!!env.TURNSTILE_SECRET&&!!env.TURNSTILE_SITE_KEY}});}
   if(u.pathname==='/api/admin/login'&&method==='POST'){await ensureSchema(env);return login(request,env)}
   if(u.pathname==='/api/admin/session'&&method==='GET'){const s=await getSession(request,env);return s?json({ok:true,csrfToken:s.csrf,expiresAt:s.exp},200,noStore()):json({ok:false},401)}
   if(u.pathname==='/api/admin/logout'&&method==='POST'){const g=await requireAdmin(request,env,true);if(!g.ok)return g.response;await audit(env,'admin_logout');return json({ok:true},200,{'Set-Cookie':clearSessionCookie()})}

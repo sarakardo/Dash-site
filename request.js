@@ -21,7 +21,7 @@
       const ready=()=>{
         if(!window.turnstile)return;
         turnstileReady=true;
-        [['pForm','#pTurnstile'],['dForm','#dTurnstile']].forEach(([formSel,slotSel])=>{
+        [['#pForm','#pTurnstile'],['#dForm','#dTurnstile']].forEach(([formSel,slotSel])=>{
           const slot=document.querySelector(slotSel);
           if(slot && !turnstileWidgets.has(formSel)) turnstileWidgets.set(formSel,window.turnstile.render(slot,{sitekey:cfg.turnstileSiteKey,theme:'light'}));
         });
