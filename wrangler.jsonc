@@ -45,12 +45,6 @@
     "RATE_LIMIT_PER_WINDOW": "6",
     "RATE_LIMIT_WINDOW_SECONDS": "600"
   },
-  "r2_buckets": [
-    {
-      "binding": "DOCS",
-      "bucket_name": "dash-driver-docs"
-    }
-  ],
   "observability": {
     "enabled": true
   }
